@@ -42,3 +42,11 @@ final appointmentsProvider = FutureProvider<List<AppointmentModel>>((ref) async 
   final repo = ref.watch(appointmentRepositoryProvider);
   return repo.fetchAppointments();
 });
+final unreadAppointmentsCountProvider = Provider<int>((ref) {
+  final appointmentsAsync = ref.watch(appointmentStreamProvider);
+  return appointmentsAsync.when(
+    data: (appointments) => appointments.length,
+    loading: () => 0,
+    error: (error, stack) => 0,
+  );
+});
