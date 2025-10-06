@@ -1,3 +1,4 @@
+import 'package:estigma/presentation/screens/cases.dart';
 import 'package:estigma/presentation/screens/welcome_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,5 +10,6 @@ final approuter = GoRouter(
     GoRoute(path: '/home', builder: (context, state) => HomeScreen()),
     GoRoute(path: '/auth', builder: (context, state) => AuthScreen()),
     GoRoute(path: '/', builder: (context, state) => WelcomeScreen()),
+    GoRoute(path: '/cases', builder: (context, state) => CasesScreen()),
   ],
 );

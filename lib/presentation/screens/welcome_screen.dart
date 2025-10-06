@@ -1,4 +1,3 @@
-
 import 'package:estigma/presentation/providers/appointmets_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,10 +12,7 @@ class WelcomeScreen extends ConsumerWidget {
     double buttonSize = 140;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Bienvenido'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Bienvenido'), centerTitle: true),
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -38,17 +34,10 @@ class WelcomeScreen extends ConsumerWidget {
                     top: 12,
                     child: Container(
                       padding: const EdgeInsets.all(6),
-                      decoration: const BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle,
-                      ),
+                      decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
                       child: Text(
                         unreadAppointments.toString(),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -61,7 +50,7 @@ class WelcomeScreen extends ConsumerWidget {
               icon: Icons.add_box,
               size: buttonSize,
               onTap: () {
-                // TODO: Navegar a la pantalla para crear caso
+                context.push('/cases');
               },
             ),
           ],
@@ -77,12 +66,7 @@ class _SquareButton extends StatelessWidget {
   final double size;
   final VoidCallback onTap;
 
-  const _SquareButton({
-    required this.label,
-    required this.icon,
-    required this.size,
-    required this.onTap,
-  });
+  const _SquareButton({required this.label, required this.icon, required this.size, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -101,11 +85,7 @@ class _SquareButton extends StatelessWidget {
             children: [
               Icon(icon, size: 40, color: Theme.of(context).colorScheme.primary),
               const SizedBox(height: 16),
-              Text(
-                label,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
+              Text(label, textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleMedium),
             ],
           ),
         ),
