@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:local_auth/local_auth.dart';
@@ -14,6 +16,7 @@ class _AuthScreenState extends State<AuthScreen> {
   bool _isAuthenticating = false;
   String _authStatus = 'Not authenticated';
 
+  // ignore: unused_element
   Future<void> _authenticate() async {
     setState(() {
       _isAuthenticating = true;

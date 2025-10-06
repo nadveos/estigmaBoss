@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:estigma/config/notifications/notification_service.dart';
 import 'package:estigma/infrastructure/mappers/appointment_mapper.dart';
 import 'package:estigma/infrastructure/models/appointmets_model.dart';
 import 'package:estigma/infrastructure/repositories/appointments_repository.dart';
@@ -11,17 +12,18 @@ final appointmentStreamProvider = StreamProvider<List<AppointmentModel>>((ref) {
   final controller = StreamController<List<AppointmentModel>>.broadcast();
 
   Future<void> loadAppointments() async {
-    final records = await client.collection('appointments').getList(
-      filter: 'isHandled=False', sort: '-created',
-    );
+    final records = await client.collection('appointments').getList(filter: 'isHandled=False', sort: '-created');
     final items = records.items.map((item) => AppointmentMapper.fromJson(item.toJson())).toList();
     print('Cargando ${items.length} citas'); // Mensaje de depuración
     controller.add(items);
   }
 
-  client.realtime.subscribe('appointments', (e) async {
+  client.collection('appointments').subscribe('*', (e) async {
     // ignore: avoid_print
-    print('Evento recibido : ${e.event}');
+    if (e.action == 'create') {
+      NotificationService.showNotification(title: 'Nueva consulta', body: 'Una nueva consulta ha sido creada');
+    }
+
     await loadAppointments();
   });
 
