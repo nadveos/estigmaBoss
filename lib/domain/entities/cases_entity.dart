@@ -1,22 +1,20 @@
 import 'package:http/http.dart';
 
 class CasesEntity {
-  final String id;
   final String name;
-  final int age;
-  final MultipartFile? images;
-  final String ulcerType;
+  final String age;
+  final MultipartFile? imgs;
+  final String type_ulcer;
   final String testimonial;
 
-  CasesEntity({required this.id, required this.name, required this.ulcerType, required this.age, required this.testimonial, this.images});
+  CasesEntity({ required this.name, required this.type_ulcer, required this.age, required this.testimonial, this.imgs});
 
-  CasesEntity copyWith({String? id, String? name, int? age,String? ulcerType, String? testimonial, MultipartFile? images}) {
+  CasesEntity copyWith({String? id, String? name, String? age,String? ulcerType, String? testimonial, MultipartFile? images}) {
     return CasesEntity(
-      id: id ?? this.id,
       name: name ?? this.name,
       age: age ?? this.age,
-      images: images ?? this.images,
-      ulcerType: ulcerType ?? this.ulcerType,
+      imgs: images ?? imgs,
+      type_ulcer: ulcerType ?? type_ulcer,
       testimonial: testimonial ?? this.testimonial,
     );
   }

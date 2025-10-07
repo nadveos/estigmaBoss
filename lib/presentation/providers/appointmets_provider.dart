@@ -37,7 +37,7 @@ final appointmentStreamProvider = StreamProvider<List<AppointmentModel>>((ref) {
   return controller.stream;
 });
 final appointmentRepositoryProvider = Provider<AppointmentRepository>((ref) {
-  return AppointmentRepository('https://testauth.meapp.com.ar');
+  return AppointmentRepository(PocketBase('https://testauth.meapp.com.ar'));
 });
 
 final appointmentsProvider = FutureProvider<List<AppointmentModel>>((ref) async {

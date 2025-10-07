@@ -1,7 +1,3 @@
-
-
-
-
 import 'dart:convert';
 
 import 'package:estigma/domain/entities/cases_entity.dart';
@@ -14,26 +10,30 @@ class CasesRepository {
   CasesRepository(this.apiUrl);
 
   Future<CasesModel> createCase(CasesEntity caseData) async {
-    final request = http.MultipartRequest(
-      'POST',
-      Uri.parse('$apiUrl/collections/cases/records'),
-    );
+    final request = http.MultipartRequest('POST', Uri.parse('$apiUrl/api/collections/cases/records'));
 
     request.fields['name'] = caseData.name;
     request.fields['age'] = caseData.age.toString();
-    request.fields['ulcerType'] = caseData.ulcerType;
+    request.fields['type_ulcer'] = caseData.type_ulcer;
     request.fields['testimonial'] = caseData.testimonial;
 
-    if (caseData.images != null) {
-      request.files.add(caseData.images!);
+    if (caseData.imgs != null) {
+      request.files.add(caseData.imgs!);
     }
 
     final response = await request.send();
+    print('RESPUESTA : ${response.statusCode}');
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       final responseBody = await response.stream.bytesToString();
-      final json = jsonDecode(responseBody);
-      return CasesMapper.fromJson(json);
+      try {
+        final json = jsonDecode(responseBody);
+        return CasesMapper.fromJson(json);
+      } catch (e) {
+        print('Error parsing response: $e');
+        print('Response body: $responseBody');
+        throw Exception('Failed to parse case response');
+      }
     } else {
       throw Exception('Failed to create case');
     }

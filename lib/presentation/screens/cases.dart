@@ -4,8 +4,8 @@ import 'package:estigma/domain/entities/cases_entity.dart';
 import 'package:estigma/presentation/providers/cases_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 class CasesScreen extends StatelessWidget {
   const CasesScreen({super.key});
@@ -55,14 +55,12 @@ class _CasesFormState extends ConsumerState<_CasesForm> {
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
       final caseData = CasesEntity(
-        id: '',
         name: _nameController.text,
-        age: int.parse(_ageController.text),
-        ulcerType: _ulcerTypeController.text,
+        age: _ageController.text,
+        type_ulcer: _ulcerTypeController.text,
         testimonial: _testimonialController.text,
-        images: _selectedImages.isNotEmpty
-            ? await http.MultipartFile.fromPath('images', _selectedImages.first.path)
-            : null,
+        imgs:
+            _selectedImages.isNotEmpty ? await http.MultipartFile.fromPath('imgs', _selectedImages.first.path) : null,
       );
 
       ref.read(casesProvider.notifier).createCase(caseData);
@@ -82,13 +80,9 @@ class _CasesFormState extends ConsumerState<_CasesForm> {
         setState(() {
           _selectedImages = [];
         });
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Caso creado con éxito')),
-        );
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Caso creado con éxito')));
       } else if (next.errorMessage != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(next.errorMessage!)),
-        );
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.errorMessage!)));
       }
     });
 
@@ -146,30 +140,26 @@ class _CasesFormState extends ConsumerState<_CasesForm> {
             const SizedBox(height: 16),
             _selectedImages.isNotEmpty
                 ? GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 4,
-                      mainAxisSpacing: 4,
-                    ),
-                    itemCount: _selectedImages.length,
-                    itemBuilder: (context, index) {
-                      return Image.file(_selectedImages[index]);
-                    },
-                  )
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 4,
+                    mainAxisSpacing: 4,
+                  ),
+                  itemCount: _selectedImages.length,
+                  itemBuilder: (context, index) {
+                    return Image.file(_selectedImages[index]);
+                  },
+                )
                 : const Text('No se ha seleccionado ninguna imagen.'),
             const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _pickImage,
-              child: const Text('Seleccionar Imagenes'),
-            ),
+            ElevatedButton(onPressed: _pickImage, child: const Text('Seleccionar Imagenes')),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: casesState.isLoading ? null : _submitForm,
-              child: casesState.isLoading
-                  ? const CircularProgressIndicator()
-                  : const Text('Enviar Caso'),
+              onPressed: 
+                casesState.isLoading ? null : _submitForm,
+              child: casesState.isLoading ? const CircularProgressIndicator() : const Text('Enviar Caso'),
             ),
             const SizedBox(height: 16),
           ],

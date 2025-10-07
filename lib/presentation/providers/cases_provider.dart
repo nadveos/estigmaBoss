@@ -47,7 +47,7 @@ class CasesNotifier extends StateNotifier<CasesState> {
 // 3. Provider
 final casesRepositoryProvider = Provider<CasesRepository>((ref) {
   // Replace with your actual API URL
-  return CasesRepository('http://127.0.0.1:8090/api');
+  return CasesRepository('https://testauth.meapp.com.ar');
 });
 
 final casesProvider = StateNotifierProvider<CasesNotifier, CasesState>((ref) {

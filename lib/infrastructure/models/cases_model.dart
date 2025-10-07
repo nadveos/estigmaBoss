@@ -1,12 +1,11 @@
 import 'package:http/http.dart';
 
 class CasesModel {
-  final String id;
   final String name;
   final String age;
-  final MultipartFile? images;
-  final String ulcerType;
+  final MultipartFile? imgs;
+  final String type_ulcer;
   final String testimonial;
 
-  CasesModel({required this.id, required this.name, required this.age, required this.images,required this.ulcerType, required this.testimonial});
+  CasesModel({ required this.name, required this.age, this.imgs,required this.type_ulcer, required this.testimonial});
 }
