@@ -54,13 +54,19 @@ class _CasesFormState extends ConsumerState<_CasesForm> {
 
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
+      List<http.MultipartFile> imageFiles = [];
+      if (_selectedImages.isNotEmpty) {
+        for (var imageFile in _selectedImages) {
+          imageFiles.add(await http.MultipartFile.fromPath('imgs', imageFile.path));
+        }
+      }
+
       final caseData = CasesEntity(
         name: _nameController.text,
         age: _ageController.text,
         type_ulcer: _ulcerTypeController.text,
         testimonial: _testimonialController.text,
-        imgs:
-            _selectedImages.isNotEmpty ? await http.MultipartFile.fromPath('imgs', _selectedImages.first.path) : null,
+        imgs: imageFiles.isNotEmpty ? imageFiles : null,
       );
 
       ref.read(casesProvider.notifier).createCase(caseData);

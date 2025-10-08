@@ -18,7 +18,7 @@ class CasesRepository {
     request.fields['testimonial'] = caseData.testimonial;
 
     if (caseData.imgs != null) {
-      request.files.add(caseData.imgs!);
+      request.files.addAll(caseData.imgs!);
     }
 
     final response = await request.send();
