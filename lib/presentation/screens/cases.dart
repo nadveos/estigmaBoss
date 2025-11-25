@@ -71,6 +71,7 @@ class _CasesFormState extends ConsumerState<_CasesForm> {
       );
 
       ref.read(casesProvider.notifier).createCase(caseData);
+      // ref.watch(casesStreamRepositoryProvider).loadCases; // Not needed, stream updates automatically
       if (mounted) {
         context.go('/');
       }

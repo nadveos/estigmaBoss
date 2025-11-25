@@ -48,9 +48,11 @@ class CasesNotifier extends StateNotifier<CasesState> {
 
   Future<void> createCase(CaseEntity caseData) async {
     state = state.copyWith(isLoading: true, errorMessage: null, isSuccess: false);
-    try {
+   
+       try {
       await casesRepository.createCase(caseData);
       state = state.copyWith(isLoading: false, isSuccess: true);
+      
     } catch (e) {
       state = state.copyWith(isLoading: false, errorMessage: e.toString());
     }
