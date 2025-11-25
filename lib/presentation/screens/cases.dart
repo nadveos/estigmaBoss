@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:estigma/domain/entities/cases_entity.dart';
+import 'package:estigma/domain/entities/case_entity.dart';
 import 'package:estigma/presentation/providers/cases_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
@@ -61,15 +62,18 @@ class _CasesFormState extends ConsumerState<_CasesForm> {
         }
       }
 
-      final caseData = CasesEntity(
+      final caseData = CaseEntity(
         name: _nameController.text,
         age: _ageController.text,
-        type_ulcer: _ulcerTypeController.text,
+        typeUlcer: _ulcerTypeController.text,
         testimonial: _testimonialController.text,
         imgs: imageFiles.isNotEmpty ? imageFiles : null,
       );
 
       ref.read(casesProvider.notifier).createCase(caseData);
+      if (mounted) {
+        context.go('/');
+      }
     }
   }
 
@@ -163,8 +167,7 @@ class _CasesFormState extends ConsumerState<_CasesForm> {
             ElevatedButton(onPressed: _pickImage, child: const Text('Seleccionar Imagenes')),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: 
-                casesState.isLoading ? null : _submitForm,
+              onPressed: casesState.isLoading ? null : _submitForm,
               child: casesState.isLoading ? const CircularProgressIndicator() : const Text('Enviar Caso'),
             ),
             const SizedBox(height: 16),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:estigma/config/enviroment/const_env.dart';
 import 'package:estigma/config/notifications/notification_service.dart';
 import 'package:estigma/infrastructure/mappers/appointment_mapper.dart';
 import 'package:estigma/infrastructure/models/appointmets_model.dart';
@@ -8,9 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 final appointmentStreamProvider = StreamProvider<List<AppointmentModel>>((ref) {
-  final client = PocketBase('https://testauth.meapp.com.ar');
+  final client = PocketBase(Enviroment.url);
   final controller = StreamController<List<AppointmentModel>>.broadcast();
-
+ 
   Future<void> loadAppointments() async {
     final records = await client.collection('appointments').getList(filter: 'isHandled=False', sort: '-created');
     final items = records.items.map((item) => AppointmentMapper.fromJson(item.toJson())).toList();
@@ -37,7 +38,7 @@ final appointmentStreamProvider = StreamProvider<List<AppointmentModel>>((ref) {
   return controller.stream;
 });
 final appointmentRepositoryProvider = Provider<AppointmentRepository>((ref) {
-  return AppointmentRepository(PocketBase('https://testauth.meapp.com.ar'));
+  return AppointmentRepository(PocketBase(Enviroment.url));
 });
 
 final appointmentsProvider = FutureProvider<List<AppointmentModel>>((ref) async {

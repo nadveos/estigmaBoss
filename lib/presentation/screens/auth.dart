@@ -58,7 +58,7 @@ class _AuthScreenState extends State<AuthScreen> {
               label: const Text('Login with Biometrics'),
               // onPressed: _isAuthenticating ? null : _authenticate,
               onPressed: () {
-                context.go('/home');
+                context.go('/');
                 
               },
             ),

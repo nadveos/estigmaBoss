@@ -1,11 +1,22 @@
-import 'package:http/http.dart';
-
 class CasesModel {
-  final String name;
-  final String age;
-  final MultipartFile? imgs;
-  final String type_ulcer;
-  final String testimonial;
+  final String items;
+  final String perPage;
+  final String page;
+  final String totalItems;
+  final String totalPages;
 
-  CasesModel({ required this.name, required this.age, this.imgs,required this.type_ulcer, required this.testimonial});
+  CasesModel({
+    required this.items,
+    required this.perPage,
+    required this.page,
+    required this.totalItems,
+    required this.totalPages,
+  });
+  factory CasesModel.fromJson(Map<String, dynamic> json) => CasesModel(
+    items: json['items'],
+    perPage: json['perPage'],
+    page: json['page'],
+    totalItems: json['totalItems'],
+    totalPages: json['totalPages'],
+  );
 }
