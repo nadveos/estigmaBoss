@@ -51,7 +51,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with SingleTickerProvid
       data:
           (appointments) =>
               appointments.isEmpty
-                  ? const Center(child: Text('No hay consultas pendientes'))
+                  ? Center(child: Text('No hay consultas pendientes', textScaler: MediaQuery.textScalerOf(context),))
                   : ListView.builder(
                     itemCount: appointments.length,
                     itemBuilder: (context, index) {
@@ -66,13 +66,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with SingleTickerProvid
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text(consulta.name, style: Theme.of(context).textTheme.titleLarge),
+                                      Text(consulta.name, style: Theme.of(context).textTheme.titleLarge, textScaler: MediaQuery.textScalerOf(context),),
                                       const SizedBox(height: 8),
-                                      Text(consulta.message),
+                                      Text(consulta.message, textScaler: MediaQuery.textScalerOf(context),),
                                       const SizedBox(height: 16),
                                       ElevatedButton.icon(
                                         icon: const Icon(Icons.phone),
-                                        label: const Text('Responder por WhatsApp'),
+                                        label: Text('Responder por WhatsApp', textScaler: MediaQuery.textScalerOf(context),),
                                         onPressed: () async {
                                           final phone = consulta.phone.replaceAll(RegExp(r'\D'), '');
                                           await onLaunch(
@@ -89,17 +89,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with SingleTickerProvid
                           );
                         },
                         leading: const Icon(Icons.help_outline, color: Colors.orange),
-                        title: Text(consulta.name),
-                        subtitle: Text(consulta.message),
-                        trailing: const Text(
+                        title: Text(consulta.name, textScaler: MediaQuery.textScalerOf(context),),
+                        subtitle: Text(consulta.message, textScaler: MediaQuery.textScalerOf(context),),
+                        trailing: Text(
                           'Sin responder',
+                          textScaler: MediaQuery.textScalerOf(context),
                           style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                          
                         ),
                       );
                     },
                   ),
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, _) => Center(child: Text('Error: $e')),
+      error: (e, _) => Center(child: Text('Error: $e', textScaler: MediaQuery.textScalerOf(context),)),
     );
   }
 

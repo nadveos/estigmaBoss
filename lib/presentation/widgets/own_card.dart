@@ -29,6 +29,7 @@ class ConsultaCard extends StatelessWidget {
               Text(
                 titulo,
                 style: Theme.of(context).textTheme.titleMedium,
+                textScaler: MediaQuery.textScalerOf(context),
               ),
               const SizedBox(height: 8),
               Text(
@@ -36,11 +37,13 @@ class ConsultaCard extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
+                textScaler: MediaQuery.textScalerOf(context),
               ),
               const SizedBox(height: 12),
               Text(
                 'Fecha: ${fecha.day}/${fecha.month}/${fecha.year}',
                 style: Theme.of(context).textTheme.bodySmall,
+                textScaler: MediaQuery.textScalerOf(context),
               ),
             ],
           ),

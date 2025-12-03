@@ -2,6 +2,7 @@ import 'package:estigma/presentation/providers/appointmets_provider.dart';
 import 'package:estigma/presentation/providers/cases_provider.dart';
 import 'package:estigma/presentation/providers/cases_stream_repository.dart';
 import 'package:estigma/presentation/providers/change_theme.dart';
+import 'package:estigma/presentation/widgets/own_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -25,6 +26,7 @@ class WelcomeScreen extends ConsumerWidget {
       body: Column(
         spacing: 10,
         children: [
+          
           Expanded(
             child: cases.when(
               data:
@@ -33,12 +35,11 @@ class WelcomeScreen extends ConsumerWidget {
                     itemBuilder: (context, index) {
                       final caseItem = casesList[index];
                       return ListTile(
-                        title: Text(caseItem.name),
-                        subtitle: Text('Edad: ${caseItem.age} - ${caseItem.typeUlcer}'),
+                        title: Text(caseItem.name, textScaler: MediaQuery.textScalerOf(context),),
+                        subtitle: Text('Edad: ${caseItem.age} - ${caseItem.typeUlcer}', textScaler: MediaQuery.textScalerOf(context),),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete),
                           onPressed: () {
-                            print('Caso con id : ${caseItem.id}');
                             ref.read(casesProvider.notifier).deleteCase(caseItem.id);
                           },
                         ),
@@ -46,7 +47,7 @@ class WelcomeScreen extends ConsumerWidget {
                     },
                   ),
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, stack) => Center(child: Text('Error: $error')),
+              error: (error, stack) => Center(child: Text('Error: $error', textScaler: MediaQuery.textScalerOf(context),)),
             ),
           ),
 
@@ -59,7 +60,7 @@ class WelcomeScreen extends ConsumerWidget {
                 children: [
                   _SquareButton(
                     label: 'Consultas',
-                    icon: Icons.event_note,
+                    icon: Icons.question_answer,
                     size: buttonSize,
                     onTap: () {
                       context.push('/home');
@@ -92,6 +93,10 @@ class WelcomeScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 16),
+          const Expanded(
+          flex: 3,
+            child: OwnCalendar(),
+          ),
         ],
       ),
     );
@@ -123,7 +128,7 @@ class _SquareButton extends StatelessWidget {
             children: [
               Icon(icon, size: 40, color: Theme.of(context).colorScheme.onSurface),
               const SizedBox(height: 16),
-              Text(label, textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleMedium),
+              Text(label, textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleMedium, textScaler: MediaQuery.textScalerOf(context)),
             ],
           ),
         ),

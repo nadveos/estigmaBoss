@@ -91,9 +91,9 @@ class _CasesFormState extends ConsumerState<_CasesForm> {
         setState(() {
           _selectedImages = [];
         });
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Caso creado con éxito')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Caso creado con éxito', textScaler: MediaQuery.textScalerOf(context),)));
       } else if (next.errorMessage != null) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.errorMessage!)));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.errorMessage!, textScaler: MediaQuery.textScalerOf(context),)));
       }
     });
 
@@ -163,13 +163,13 @@ class _CasesFormState extends ConsumerState<_CasesForm> {
                     return Image.file(_selectedImages[index]);
                   },
                 )
-                : const Text('No se ha seleccionado ninguna imagen.'),
+                : Text('No se ha seleccionado ninguna imagen.', textScaler: MediaQuery.textScalerOf(context),),
             const SizedBox(height: 16),
-            ElevatedButton(onPressed: _pickImage, child: const Text('Seleccionar Imagenes')),
+            ElevatedButton(onPressed: _pickImage, child: Text('Seleccionar Imagenes', textScaler: MediaQuery.textScalerOf(context),)),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: casesState.isLoading ? null : _submitForm,
-              child: casesState.isLoading ? const CircularProgressIndicator() : const Text('Enviar Caso'),
+              child: casesState.isLoading ? const CircularProgressIndicator() : Text('Enviar Caso', textScaler: MediaQuery.textScalerOf(context),),
             ),
             const SizedBox(height: 16),
           ],
